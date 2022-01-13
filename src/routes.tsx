@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
+import BalanceScreen from './screens/BalanceScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +16,17 @@ function Routes() {
                     {
                         headerShown: false,
                     }} />
-                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Balance" component={BalanceScreen} options={
+                    {
+                        headerShown: false,
+                    }
+                }/>
+
+                <Stack.Screen name="Transactions" component={BalanceScreen} options={
+                    {
+                        headerShown: false,
+                    }
+                }/>
             </Stack.Navigator>
         </NavigationContainer>
     );
