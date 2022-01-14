@@ -44,7 +44,6 @@ function LoginScreen() {
         }
     }
 
-
     const handleUsernameChange = (username: string) => {
         setUsername(username);
     }
@@ -52,8 +51,6 @@ function LoginScreen() {
     const handlePasswordChange = (password: string) => {
         setPassword(password);
     }
-
-
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
