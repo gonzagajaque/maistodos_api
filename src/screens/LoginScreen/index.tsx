@@ -9,6 +9,7 @@ import {
     Keyboard,
     Dimensions,
 } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import api from '../../services/api';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 
@@ -32,17 +33,16 @@ function LoginScreen() {
                 CommonActions.reset({
                     index: 0,
                     routes: [
-                        { name: 'Home' },
+                        { name: 'Balance' },
                     ],
                 })
             );
 
         } catch (err) {
-            setError('Usuário ou senha inválidos');
+            setError('CPF ou senha inválidos');
             console.log(err);
         }
     }
-
 
     const handleUsernameChange = (username: string) => {
         setUsername(username);
@@ -51,8 +51,6 @@ function LoginScreen() {
     const handlePasswordChange = (password: string) => {
         setPassword(password);
     }
-
-
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -63,14 +61,16 @@ function LoginScreen() {
                 <View style={styles.authBox}>
                     <View style={styles.inputBox}>
                         <Text>Usuário</Text>
-                        <TextInput
+                        <TextInputMask
+                        type={'cpf'}
                             style={styles.input}
-                            placeholder='Digite seu usuário'
+                            placeholder='Digite seu CPF'
                             value={username}
                             onChangeText={handleUsernameChange}
                             autoCapitalize={'none'}
-                            keyboardType={'default'}
+                            keyboardType={'number-pad'}
                             textContentType='username'
+                            autoComplete='username'
                         />
                     </View>
                     <View style={styles.inputBox}>
