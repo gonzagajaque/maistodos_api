@@ -128,18 +128,9 @@ Parte 5
 
 ## Layout final
 
-Login
+Login e senha
 =====
 ![Username](1.png)
-
-Senha
-=====
-![Password](1.png)
-
-Saldo + Transações
-==================
-![Saldo escondido](2.png)
-
 
 Saldo + Transações
 ==================
