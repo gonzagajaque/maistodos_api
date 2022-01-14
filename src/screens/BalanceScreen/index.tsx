@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, FlatList, StatusBar } from 'react-native';
-import { CommonActions, NavigationContainer, useNavigation } from '@react-navigation/native';
+import { Text, View, FlatList, StatusBar, ScrollView, Alert } from 'react-native';
 import api from '../../services/api';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SegmentedControlTab from "react-native-segmented-control-tab";
+import { useStyles } from "./style";
+import LinearGradient from 'react-native-linear-gradient';
 
 function BalanceScreen() {
 
     const [balance, setBalance] = useState();
     const [transactions, setTransactions] = useState();
-    const [ selectedIndex, setSelectedIndex ] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const navigation = useNavigation();
+    const styles = useStyles();
 
     useEffect(() => {
         getBalance();
         getTransactions();
     }, []);
+
+    const notImplemented = () => {
+        Alert.alert('Ainda não implementado'
+            , 'Funcionalidade implementada apenas para fim de visualização.');
+    }
 
     async function getBalance() {
         try {
@@ -41,7 +47,7 @@ function BalanceScreen() {
 
     const handleSingleIndexSelect = (index: any) => {
         setSelectedIndex(index);
-      };
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -49,32 +55,56 @@ function BalanceScreen() {
                 <Icon
                     name="align-justify"
                     size={30} color="#fff"
-                    onPress={() => navigation.dispatch(CommonActions.goBack())}
+                    onPress={notImplemented}
                 />
                 <Text style={styles.headerTitle}>
                     Carteira Digital
                 </Text>
-                <Icon name='bell' size={26} color='#fff' />
+                <Icon name='bell'
+                    size={26}
+                    color='#fff'
+                    onPress={notImplemented}
+                />
+
             </View>
             <View style={styles.section}>
-            <Icon name="user-nurse" size={50} color='#98d41f' />
-            <Icon name="map-marker" size={50} color='#98d41f' />
+                <Icon
+                    name="user-nurse"
+                    size={30}
+                    color='#584596'
+                    onPress={notImplemented}
+                />
+                <Icon
+                    name="map-marker-alt"
+                    size={30}
+                    color='#584596'
+                    onPress={notImplemented}
+                />
             </View>
             <View style={styles.cardBalance}>
                 <Text style={styles.titleBalance}>Saldo Disponível</Text>
-                <Text style={styles.balance}>R${balance}</Text>
+                <View style={styles.saldo}>
+                    <Text style={styles.balance}>R${balance}</Text>
+                    <Icon
+                    name='eye'
+                    style={{ marginLeft: 10 }}
+                    size={25}
+                    color='#584596'
+                    onPress={notImplemented}
+                    />
+                </View>
                 <Text style={styles.descriptionBalance}>
                     Esse é o valor total de cashback, depósitos, pagamentos e transferências recebidas.
                 </Text>
             </View>
             <View>
-            <SegmentedControlTab
-          values={['Entrada', 'Saída']}
-          selectedIndex={selectedIndex}
-          tabStyle={styles.tabStyle}
-          activeTabStyle={styles.activeTabStyle}
-          onTabPress={handleSingleIndexSelect}
-        />
+                <SegmentedControlTab
+                    values={['Entrada', 'Saída']}
+                    selectedIndex={selectedIndex}
+                    tabStyle={styles.tabStyle}
+                    activeTabStyle={styles.activeTabStyle}
+                    onTabPress={handleSingleIndexSelect}
+                />
             </View>
             <FlatList style={styles.list}
                 data={transactions}
@@ -85,11 +115,46 @@ function BalanceScreen() {
                         <View
                             key={index}
                         >
-                            <View style={styles.cardTransaction}>
-                                <Text style={styles.titleTransaction}>{item.cartaoMascarado}</Text>
-                                <Text style={styles.dateTransaction}>{item.dataTransacao}</Text>
-                                <Text style={styles.valueTransaction}>{item.descricao}</Text>
-                            </View>
+                            <ScrollView>
+                                <View style={styles.cardTransaction}>
+                                    <View style={styles.headerTotal}>
+                                        <Text style={styles.dateTransaction}>
+                                            {item.dataTransacao}
+                                        </Text>
+                                        <Icon
+                                            name='info'
+                                            size={15}
+                                            color='#584596'
+                                            onPress={notImplemented}
+                                        />
+                                    </View>
+
+                                    <Text style={styles.valueTransaction}>
+                                        {item.tipoTransacao}
+                                    </Text>
+                                    {/* <Text style={styles.titleTransaction}>
+                                        {item.cartaoMascarado}
+                                    </Text> */}
+                                    <Text style={styles.titleTransaction}>
+                                        {item.descricao}
+                                    </Text>
+                                    <Text style={styles.titleTransaction}>
+                                        Cartão final: {item.finalCartao}
+                                    </Text>
+                                    <Text style={styles.titleTransaction}>
+                                        {item.nomePortador}
+                                    </Text>
+                                    {/* <Text style={styles.titleTransaction}>
+                                        {item.tipoLancamento}
+                                    </Text> */}
+                                    <View style={styles.headerTotal}>
+                                        <Text style={styles.headerTotalTitle}>Total</Text>
+                                        <Text style={styles.headerTotalTitle}>R${item.valorTransacao}</Text>
+                                    </View>
+
+                                </View>
+                            </ScrollView>
+
                         </View>
                     )
                 }}
@@ -100,36 +165,36 @@ function BalanceScreen() {
 }
 
 function transacoes() {
+    const styles = useStyles();
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.pagesNotImplementeds}>
             <Text>Transações</Text>
         </View>
     );
 };
 
 function cartoes() {
+    const styles = useStyles();
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.pagesNotImplementeds}>
             <Text>Cartões</Text>
         </View>
     );
 };
 
 function pay() {
+    const styles = useStyles();
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.pagesNotImplementeds}>
             <Text>Pagar</Text>
         </View>
     );
 };
 
 function perfil() {
+    const styles = useStyles();
     return (
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-            }}>
+        <View style={styles.pagesNotImplementeds}>
             <Text>Perfil</Text>
         </View>
     );
@@ -141,25 +206,27 @@ export default function tabs() {
     StatusBar.setBarStyle('light-content', true);
     return (
         //@ts-ignore
-        <Tab.Navigator tabBarOptions = {{
+        <Tab.Navigator tabBarOptions={{
             activeTintColor: '#584596',
             inactiveTintColor: '#fff',
         }}>
-            <Tab.Screen name="Inicio" component={BalanceScreen} options={{
-                tabBarIcon: () => (
-                    <Icon name="home" size={30} color={'#fff'} />
+            <Tab.Screen name="Início" component={BalanceScreen} options={{
+                tabBarIcon: ({ color }) => (
+                    <Icon name="home" size={30} color={color} />
                 ),
                 headerShown: false,
+                tabBarShowLabel: false,
                 tabBarStyle: {
                     backgroundColor: '#98d41f',
                     borderTopColor: '#98d41f',
                     borderTopWidth: 0.5,
                 }
-            }}/>
+            }} />
             <Tab.Screen name="Transações" component={transacoes} options={{
-                tabBarIcon: () => (
-                    <Icon name="comments-dollar" size={30} color={'#fff'} />
+                tabBarIcon: ({ color }) => (
+                    <Icon name="comments-dollar" size={30} color={color} />
                 ),
+                tabBarShowLabel: false,
                 tabBarStyle: {
                     backgroundColor: '#98d41f',
                     borderTopColor: '#98d41f',
@@ -168,18 +235,39 @@ export default function tabs() {
             }} />
             <Tab.Screen name="Pagar" component={pay} options={{
                 tabBarIcon: () => (
-                    <Icon name="dollar-sign" size={30} color={'#fff'} />
+                    <LinearGradient style={{
+                        width: 60,
+                        height: 60,
+                        borderRadius: 30,
+                        marginBottom: 20,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        elevation: 6,
+                        shadowColor: '#98d41f',
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.2,
+                        shadowRadius: 5,
+                    }}
+                        start={{ x: 0, y: 1 }}
+                        end={{ x: 0, y: 0 }}
+                        colors={['#584596', '#312553']
+                        }>
+                        <Icon name="dollar-sign" size={26} color={'#98d41f'} />
+                    </LinearGradient>
                 ),
+                tabBarShowLabel: false,
                 tabBarStyle: {
                     backgroundColor: '#98d41f',
                     borderTopColor: '#98d41f',
                     borderTopWidth: 0.5,
-                }, 
+                },
             }} />
             <Tab.Screen name="Cartões" component={cartoes} options={{
-                tabBarIcon: () => (
-                    <Icon name="credit-card" size={30} color={'#fff'} />
+                tabBarIcon: ({ color }) => (
+                    <Icon name="credit-card" size={30} color={color} />
                 ),
+                tabBarShowLabel: false,
                 tabBarStyle: {
                     backgroundColor: '#98d41f',
                     borderTopColor: '#98d41f',
@@ -187,9 +275,10 @@ export default function tabs() {
                 }
             }} />
             <Tab.Screen name="Perfil" component={perfil} options={{
-                tabBarIcon: () => (
-                    <Icon name="user" size={30} color={'#fff'} />
+                tabBarIcon: ({ color }) => (
+                    <Icon name="user" size={30} color={color} />
                 ),
+                tabBarShowLabel: false,
                 tabBarStyle: {
                     backgroundColor: '#98d41f',
                     borderTopColor: '#98d41f',
@@ -198,86 +287,4 @@ export default function tabs() {
             }} />
         </Tab.Navigator>
     );
-
 }
-
-const styles = StyleSheet.create({
-    header: {
-        height: 50,
-        backgroundColor: '#98d41f',//'#584596',
-        paddingHorizontal: 10,
-        borderBottomColor: '#dfe4fe',
-        borderBottomWidth: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    section: {
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        paddingHorizontal: 30,
-        marginTop: 10,
-    },
-    cardBalance: {
-        flex: 0.5,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        margin: 10,
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    titleBalance: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    balance: {
-        fontSize: 40,
-        fontWeight: 'bold'
-    },
-    descriptionBalance: {
-        fontSize: 14,
-        fontWeight: 'bold'
-    },
-    cardTransaction: {
-        flex: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        margin: 10,
-        padding: 10,
-    },
-    titleTransaction: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    dateTransaction: {
-        fontSize: 14,
-        fontWeight: 'bold'
-    },
-    valueTransaction: {
-        fontSize: 14,
-        fontWeight: 'bold'
-    },
-    list: {
-        flex: 1,
-    },
-    tabStyle: {
-        backgroundColor: '#98d41f',
-        marginHorizontal: 10,
-        borderTopColor: '#98d41f',
-        borderTopWidth: 0.5,
-        borderRadius: 4,
-        paddingBottom: 10,
-    },
-    activeTabStyle: {
-        backgroundColor: '#584596',
-    },
-});
