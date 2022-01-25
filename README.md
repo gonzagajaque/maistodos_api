@@ -130,11 +130,11 @@ Parte 5
 
 Login e senha
 =====
-![Username](1.png)
+![Username](./src/images/1.png)
 
 Saldo + Transações
 ==================
-![Saldo visível](2.png)
+![Saldo visível](./src/images/2.png)
 
 
 ![](https://c.tenor.com/A-wSmlBMr0EAAAAd/obrigada-polly.gif)
